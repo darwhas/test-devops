@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparador de Temperaturas</title>
+</head>
+<body>
+    <h1>Comparador de Temperaturas</h1>
+    <form action="/comparacion" method="post">
+        <label for="ciudad_1">Selecciona la primera ciudad:</label>
+        <select name="ciudad_1" id="ciudad_1">
+            {% for ciudad in ciudades %}
+                <option value="{{ ciudad }}">{{ ciudad }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="ciudad_2">Selecciona la segunda ciudad:</label>
+        <select name="ciudad_2" id="ciudad_2">
+            {% for ciudad in ciudades %}
+                <option value="{{ ciudad }}">{{ ciudad }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="ciudad_3">Selecciona la segunda ciudad:</label>
+        <select name="ciudad_3" id="ciudad_3">
+            {% for ciudad in ciudades %}
+                <option value="{{ ciudad }}">{{ ciudad }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Comparar Temperaturas</button>
+    </form>
+</body>
+</html>
