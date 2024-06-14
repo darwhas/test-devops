@@ -1,0 +1,36 @@
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const imageUrl = new URL(request.url)
+  // Extraer el tamaño deseado de la imagen de la consulta de la URL
+  const width = Number(imageUrl.searchParams.get('width'))
+  const height = Number(imageUrl.searchParams.get('height'))
+  
+  // Obtener la imagen original
+  const imageResponse = await fetch(imageUrl.toString())
+
+  // Leer el contenido de la imagen original
+  const imageBuffer = await imageResponse.arrayBuffer()
+
+  // Redimensionar la imagen usando la biblioteca sharp
+  const resizedImageBuffer = await resizeImage(imageBuffer, width, height)
+
+  // Devolver la imagen redimensionada
+  return new Response(resizedImageBuffer, {
+    headers: {
+      'Content-Type': imageResponse.headers.get('Content-Type'),
+      'Cache-Control': 'public, max-age=3600' // Almacenar en caché la imagen por 1 hora
+    }
+  })
+}
+
+async function resizeImage(imageBuffer, width, height) {
+  const sharp = require('sharp')
+  // Redimensionar la imagen y convertirla a un buffer
+  const resizedImageBuffer = await sharp(imageBuffer)
+    .resize(width, height)
+    .toBuffer()
+  return resizedImageBuffer
+}
