@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temperatura-app
+  namespace: tech.prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temperatura-app
+  template:
+    metadata:
+      labels:
+        app: temperatura-app
+    spec:
+      containers:
+      - name: temperatura-app
+        image: darwhas/temperatura-app:latest 
+        resources:
+          limits:
+            memory: "3Gi"
+        ports:
+        - containerPort: 5000
